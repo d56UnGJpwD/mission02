@@ -21,17 +21,22 @@ public class PostFix {
      * empty, or contains only whitespace.
      */
     public static int evalPostFix(String infix) {
+
+        //Initial check for illegal inputs
         if(infix == "" || infix == " " || infix == null){
             return 0;
         }
+        //create the stack that will be used
         LinkedStack<Integer> stack = new LinkedStack<>();
 
+        //parse the input string at every space
         for (int i = 0; i < infix.length(); i++) {
             char ch = infix.charAt(i);
 
             if (ch == ' ')
                 continue;
 
+            //loop while we are looking at a digit, and not a space(for numbers > 9)
             else if (Character.isDigit(ch)) {
                 int digit = 0;
 
@@ -41,11 +46,12 @@ public class PostFix {
                     ch = infix.charAt(i);
                 }
                 i--;
-
+            //add the number to our stack
                 stack.push(digit);
             }
 
             else {
+                //try catch to see if there are enough numbers/operators to complete the calculation
                 try {
                     int n1 = stack.pop();
                     int n2 = stack.pop();
@@ -74,6 +80,7 @@ public class PostFix {
                 }
             }
         }
+        //return the calculated number
         return stack.pop();
     }
 }
