@@ -37,21 +37,39 @@ public class LinkedStack<E> implements Stack<E> {
     }
 
     public void push(E element){
-        Node<E> old = first;
-        first = new Node(element, old);
+        if(element != null) {
+            Node<E> old = first;
+            first = new Node(element, old);
+            size++;
+        }
     }
 
 
     public E peek(){
-        return null;
+        if(isEmpty()){
+            return null;
+        }
+        else{
+            return first.getElement();
+        }
     }
 
     public E pop(){
-        return null;
+        if(isEmpty()){
+            return null;
+        }
+        E value = first.getElement();
+        first = first.next;
+        size--;
+        return value;
+    }
+
+    public Node<E> getFirst(){
+        return first;
     }
 
     public int size(){
-        return 0;
+        return size;
     }
 
     public boolean isEmpty(){
@@ -62,18 +80,61 @@ public class LinkedStack<E> implements Stack<E> {
     }
 
     public void transfer(Stack<E> to){
+        if(to != null) {
+            Node<E> current = first;
+            while (current != null) {
+                to.push(current.getElement());
 
+                current = current.next;
+                pop();
+            }
+        }
     }
 
     public void reverse(){
+        if(size > 0)
+        {
+            Node<E> top = first;
+            pop();
+            reverse();
 
+            addToBot(top);
+
+        }
+    }
+
+    private void addToBot(Node<E> node){
+        if(size == 0){
+            push(node.getElement());
+        }
+        else{
+            Node<E> top = first;
+            pop();
+            addToBot(top);
+        }
     }
 
     public void merge(Stack<E> other){
 
+        if(other != null){
+
+            other.transfer(this);
+
+
+        }
+
+
+
+
+
     }
 
-    public void printStack(){
 
+    public void printStack(){
+        Node<E> current = first;
+        while(current != null){
+            System.out.println(current.getElement());
+            current = current.next;
+        }
     }
 }
