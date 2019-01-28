@@ -117,8 +117,9 @@ public class LinkedStack<E> implements Stack<E> {
     public void merge(Stack<E> other){
 
         if(other != null){
-
-            other.transfer(this);
+            Stack<E> temp = other;
+            temp.reverse();
+            temp.transfer(this);
 
 
         }
